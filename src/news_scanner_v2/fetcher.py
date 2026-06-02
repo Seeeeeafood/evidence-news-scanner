@@ -15,7 +15,7 @@ from .models import CandidateItem
 from .sources import NewsSource
 
 
-USER_AGENT = "EvidenceNewsScanner/0.1 (+https://github.com/YOUR_USERNAME/evidence-news-scanner)"
+USER_AGENT = "EvidenceNewsScanner/0.1 (+https://github.com/Seeeeeafood/evidence-news-scanner)"
 _TAG_RE = re.compile(r"<[^>]+>")
 _SPACE_RE = re.compile(r"\s+")
 

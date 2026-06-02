@@ -32,7 +32,7 @@ filters; API keys are read only from environment variables.
 ## Quick Start
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/evidence-news-scanner.git
+git clone https://github.com/Seeeeeafood/evidence-news-scanner.git
 cd evidence-news-scanner
 PYTHONPATH=src python3 -m news_scanner_v2 init-db
 PYTHONPATH=src python3 -m news_scanner_v2 sources

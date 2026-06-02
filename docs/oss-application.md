@@ -4,7 +4,7 @@ Use these notes as raw material for the application form.
 
 ## Repository
 
-`https://github.com/YOUR_USERNAME/evidence-news-scanner`
+`https://github.com/Seeeeeafood/evidence-news-scanner`
 
 ## Project Summary
 
