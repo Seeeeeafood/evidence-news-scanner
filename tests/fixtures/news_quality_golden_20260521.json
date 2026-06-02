@@ -1,0 +1,184 @@
+{
+  "version": "news_quality_golden_v1",
+  "description": "V1-vs-V2 quality fixture for the 2026-05-20 22:30 through 2026-05-21 11:00 KST live comparison window.",
+  "slots": [
+    {
+      "label": "2026-05-20 22:30 KST",
+      "as_of": "2026-05-20T22:30:00+09:00",
+      "run_id": "4c9824f3-7136-4f1d-9f72-3f382d31ab58",
+      "checks": [
+        {
+          "id": "2230_nvda_hsbc_target_watch",
+          "description": "V1 surfaced NVDA HSBC price-target raise; V2 should at least keep it as Watch/B.",
+          "severity": "should",
+          "expected_stage": "send_candidate",
+          "match": {
+            "category_any": ["ANAL"],
+            "terms_all": ["Nvidia", "price target"],
+            "terms_any": ["HSBC", "$325", "$295"]
+          },
+          "v1_reference": "[22:30] [B] ANALYST NVDA HSBC $295-> $325 Buy 유지"
+        },
+        {
+          "id": "2230_macro_yields_snapshot",
+          "description": "V1 preserved 10Y/30Y yield levels; V2 should expose them in the macro snapshot lane.",
+          "severity": "should",
+          "expected_stage": "delivery",
+          "match": {
+            "category_any": ["MACRO"],
+            "terms_any": ["10-year Treasury", "30-year Treasury", "yield"]
+          },
+          "delivery_match": {
+            "terms_any": ["10Y", "30Y", "국채"]
+          },
+          "v1_reference": "[22:30] [A] MACRO 미국채 10Y 4.70% 16개월 최고, 30Y 5.20% 18년 최고"
+        }
+      ]
+    },
+    {
+      "label": "2026-05-21 01:00 KST",
+      "as_of": "2026-05-21T01:00:00+09:00",
+      "run_id": "f2cdc1a5-eab9-4126-b8a5-6f349182463b",
+      "checks": [
+        {
+          "id": "0100_nvda_earnings_preview_numbers",
+          "description": "V1 surfaced NVDA earnings-preview consensus numbers; V2 should preserve the numeric setup before the print.",
+          "severity": "must",
+          "expected_stage": "delivery",
+          "match": {
+            "category_any": ["EARN", "STRAT"],
+            "terms_any": ["Nvidia", "NVDA"],
+            "terms_all": ["earnings"]
+          },
+          "delivery_match": {
+            "terms_any": ["NVDA", "엔비디아"],
+            "terms_all": ["EPS"]
+          },
+          "v1_reference": "[01:00] [B] [EARNINGS] NVDA Q1_FY2027 오늘 AMC 발표 예정 컨센서스 $78B/$1.77"
+        },
+        {
+          "id": "0100_analyst_target_watch",
+          "description": "V1 surfaced D.A. Davidson CRWV/NBIS target changes; V2 should retain concrete target/rating actions as Watch.",
+          "severity": "should",
+          "expected_stage": "send_candidate",
+          "match": {
+            "category_any": ["ANAL"],
+            "terms_any": ["D.A. Davidson", "DA Davidson", "CRWV", "NBIS"],
+            "terms_all": ["target"]
+          },
+          "v1_reference": "[01:00] [B] [ANAL] DA Davidson CRWV Buy->Neutral 목표가$100 / NBIS Neutral 개시 목표가$250"
+        },
+        {
+          "id": "0100_macro_snapshot_levels",
+          "description": "V1 preserved WTI/Brent/10Y/USDKRW market levels; V2 should restore the snapshot even when not headline-worthy.",
+          "severity": "should",
+          "expected_stage": "delivery",
+          "match": {
+            "category_any": ["MACRO"],
+            "terms_any": ["WTI", "Brent", "10-year Treasury", "USD KRW"]
+          },
+          "delivery_match": {
+            "terms_any": ["WTI", "Brent", "10Y", "USD/KRW"]
+          },
+          "v1_reference": "[01:00] [MACRO] WTI $103.8(-0.5%) | Brent $110.9(-1.0%) | 10Y 4.61% | USD/KRW 1,505"
+        }
+      ]
+    },
+    {
+      "label": "2026-05-21 05:00 KST",
+      "as_of": "2026-05-21T05:00:01+09:00",
+      "run_id": "ab1316d2-c7cb-4dac-b5ee-8fe221cdd502",
+      "checks": [
+        {
+          "id": "0500_fomc_minutes_official",
+          "description": "Official Federal Reserve FOMC minutes must become an event, not stay as an unextracted candidate.",
+          "severity": "must",
+          "expected_stage": "event",
+          "match": {
+            "category_any": ["MACRO"],
+            "terms_all": ["Minutes", "Federal Open Market Committee"]
+          },
+          "v1_reference": "[05:00] [A] [POLICY] FOMC 4월 의사록 공개: 다수 위원 추가인상 필요, 동결 장기화 판단"
+        },
+        {
+          "id": "0500_no_repeat_semiconductor_theme",
+          "description": "The 05:00 digest should not resend the 01:00 semiconductor-pressure theme without new evidence.",
+          "severity": "must",
+          "expected_stage": "not_delivery",
+          "match": {
+            "terms_any": ["semiconductor_pressure", "NVDA"]
+          },
+          "delivery_match": {
+            "terms_any": ["반도체", "칩주", "NVDA"]
+          },
+          "v1_reference": "[05:00] [NONE] 특이사항없음 01:00 이후 신규 A/B 없음"
+        }
+      ]
+    },
+    {
+      "label": "2026-05-21 11:00 KST",
+      "as_of": "2026-05-21T11:00:00+09:00",
+      "run_id": "6a19fa68-3955-4301-b3b3-995b2bb660a7",
+      "checks": [
+        {
+          "id": "1100_nvda_actual_numeric_pack",
+          "description": "Post-print NVDA should include actual EPS/revenue/guidance/buyback detail, not a thin narrative.",
+          "severity": "must",
+          "expected_stage": "delivery",
+          "match": {
+            "category_any": ["EARN", "STRAT"],
+            "terms_any": ["Nvidia", "NVDA"],
+            "terms_all": ["earnings"]
+          },
+          "delivery_match": {
+            "terms_all": ["EPS", "$80B"],
+            "terms_any": ["$81.6", "81.6"]
+          },
+          "v1_reference": "V1-style NVDA post-print should preserve EPS/revenue/guidance/buyback/market reaction numbers."
+        },
+        {
+          "id": "1100_space_x_ipo_filing",
+          "description": "SpaceX IPO filing should be separated from TSLA-SpaceX merger rumors and reach Watch/B delivery.",
+          "severity": "must",
+          "expected_stage": "delivery",
+          "match": {
+            "category_any": ["MA"],
+            "terms_all": ["SpaceX", "IPO"],
+            "terms_any": ["filing", "files", "S-1", "Nasdaq"]
+          },
+          "delivery_match": {
+            "terms_all": ["SpaceX", "IPO"]
+          },
+          "v1_reference": "V1 caught SpaceX as a standalone market-relevant story; V2 saw Bloomberg/CNBC/Reuters candidates but dropped the filing story."
+        },
+        {
+          "id": "1100_no_generic_intu_summary",
+          "description": "Generic fallback text such as 'INTU 실적 관련 신규 이슈' must never reach Telegram.",
+          "severity": "must",
+          "expected_stage": "not_delivery",
+          "match": {
+            "category_any": ["EARN"],
+            "terms_any": ["Intuit", "INTU"]
+          },
+          "delivery_match": {
+            "terms_all": ["INTU", "실적 관련 신규 이슈"]
+          },
+          "v1_reference": "User correction: generic summary gives no actionable content."
+        },
+        {
+          "id": "1100_no_third_semiconductor_repeat",
+          "description": "The 11:00 digest should not send the same semiconductor-pressure theme for a third time unless tied to new NVDA post-print facts.",
+          "severity": "must",
+          "expected_stage": "not_delivery",
+          "match": {
+            "terms_any": ["semiconductor_pressure", "NVDA"]
+          },
+          "delivery_match": {
+            "terms_all": ["NVDA가 실적 후 약세", "반도체"]
+          },
+          "v1_reference": "Theme update should be anchored to new post-print facts; otherwise suppress as repeat."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+[project]
+name = "evidence-news-scanner"
+version = "0.1.0"
+description = "Local-first market news triage with evidence gates and auditable delivery decisions"
+readme = "README.md"
+requires-python = ">=3.9"
+license = "MIT"
+dependencies = []
+
+[project.scripts]
+evidence-news-scanner = "news_scanner_v2.cli:main"
+news-scanner-v2 = "news_scanner_v2.cli:main"
+
+[tool.unittest]
+testpaths = ["tests"]
